@@ -135,8 +135,7 @@ CORS_ALLOW_CREDENTIALS = False
 
 import os
 STATIC_URL = '/python/static/'
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, "staticfiles")]
-STATIC_ROOT = '/usr/local/lsws/Example/html/demo/public/static'
+STATIC_ROOT = '/var/www/html/demo/public/static'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
