@@ -7,8 +7,9 @@ class User (AbstractUser):
     national_id = models.BigIntegerField()
     job_title = models.CharField(max_length=250)
     is_admin = models.BooleanField(default=False)
+    email = models.EmailField(unique=True)
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["name"]
+    REQUIRED_FIELDS = ["username"]
 
 class OTPCode(models.Model):
     otp = models.BigIntegerField()
