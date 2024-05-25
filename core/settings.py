@@ -135,7 +135,7 @@ CORS_ALLOW_CREDENTIALS = False
 
 import os
 STATIC_URL = '/python/static/'
-STATIC_ROOT = '/var/www/html/demo/public/static'
+STATIC_ROOT = '/var/www/html/public/static'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -189,3 +189,5 @@ EMAIL_HOST_USER = "yosofaymanessawy@gmail.com"
 EMAIL_HOST_PASSWORD = "urlx idef uypy xvgs"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+AUTH_USER_MODEL = 'users.User'
