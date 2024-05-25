@@ -4,8 +4,8 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class User (AbstractUser):
-    national_id = models.BigIntegerField()
-    job_title = models.CharField(max_length=250)
+    national_id = models.BigIntegerField(null=True, blank=True)
+    job_title = models.CharField(max_length=250, null=True, blank=True)
     is_admin = models.BooleanField(default=False)
     email = models.EmailField(unique=True)
     USERNAME_FIELD = "email"
