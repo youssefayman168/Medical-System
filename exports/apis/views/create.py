@@ -5,8 +5,8 @@ from rest_framework import status
 from exports.models import Export, Order
 from globals.track_activity import track_activity
 
-@permission_classes([permissions.IsAdminUser])
 @api_view(["POST"])
+@permission_classes([permissions.IsAdminUser])
 def create_export(request):
     data = request.data
     user = request.user 
