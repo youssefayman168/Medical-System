@@ -184,7 +184,7 @@ SIMPLE_JWT = {
 
 
 CELERY_BROKER_URL = (
-    "redis://default:iJgbeNgnpB3dEGkGiHgfmn2DmK26JaNn@viaduct.proxy.rlwy.net:14525"
+    "redis://127.0.0.1:6379/1"
 )
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_TASK_SERIALIZER = "json"
