@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from .views.create import create_user
 from .views.delete import delete_user
 from .views.get import get_user, get_users
@@ -11,4 +11,5 @@ urlpatterns = [
     path("update/<int:user_id>/", update_user),
     path("get-user/<int:user_id>/", get_user),
     path("login/", login),
+    path('reset-password/', include("users.apis.views.reset_password.urls")),
 ]
