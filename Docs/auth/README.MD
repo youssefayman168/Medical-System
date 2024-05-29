@@ -11,4 +11,4 @@
 
 ## Login: [Click Here](/DOcs/auth/Login.md)
 
-## Login: [Click Here](/DOcs/auth/reset/README.MD)
+<!-- ## Login: [Click Here](/DOcs/auth/reset/README.MD) -->
