@@ -4,6 +4,7 @@ from .views.delete import delete_user
 from .views.get import get_user, get_users
 from .views.update import update_user
 from .views.login import login
+from rest_framework_simplejwt.views import TokenRefreshView
 
 urlpatterns = [
     path("create/", create_user),
@@ -12,4 +13,5 @@ urlpatterns = [
     path("get-user/<int:user_id>/", get_user),
     path("login/", login),
     path('reset-password/', include("users.apis.views.reset_password.urls")),
+    path("refresh/", TokenRefreshView.as_view())
 ]
