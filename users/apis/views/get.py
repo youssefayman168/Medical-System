@@ -15,7 +15,7 @@ def get_users(request):
         serializer = UserSerializer(users, many=True)
         return Response({
             "data": serializer.data
-        }, status=status.HTTP_400_BAD_REQUEST)
+        }, status=status.HTTP_200_OK)
     except Exception as e:
         print(e)
         return Response({
@@ -36,7 +36,7 @@ def get_user(request, user_id):
         serializer = UserSerializer(user, many=False)
         return Response({
             "data": serializer.data
-        }, status=status.HTTP_400_BAD_REQUEST)
+        }, status=status.HTTP_200_OK)
     except Exception as e:
         print(e)
         return Response({
