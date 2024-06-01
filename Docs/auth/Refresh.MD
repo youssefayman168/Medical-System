@@ -8,6 +8,8 @@
 
 # Endpoint: http://apis.kah-moh.com/users/refresh/
 
+# METHOD: POST
+
 # Data:
 
 - Refresh

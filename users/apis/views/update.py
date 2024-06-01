@@ -25,7 +25,7 @@ def update_user(request, user_id):
         except Exception as e:
             print(e)
             return Response({
-                "message": "حدث خطأ اثناء تحديث بيانات المستخدم"
+                "message": f"حدث خطأ اثناء تحديث بيانات المستخدم {e}" 
             }, status=status.HTTP_400_BAD_REQUEST)
     except Exception as error:
         print(error)
