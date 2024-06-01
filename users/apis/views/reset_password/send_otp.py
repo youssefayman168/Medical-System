@@ -45,5 +45,5 @@ def send_reset_otp(request):
     except Exception as e:
         print(e)
         return Response({
-            "message": f"an error occurred while sending the email, please try again. {e}"
+            "message": f"an error occurred while sending the email, please try again. error: {e}"
         }, status=status.HTTP_400_BAD_REQUEST)
