@@ -19,31 +19,31 @@ def send_reset_otp(request):
 
     if not data:
         return Response({
-            "message": "Data can't be empty"
+            "message": "لا يمكن للبيانات ان تكون فارغة"
         }, status=status.HTTP_400_BAD_REQUEST)
     
     email = data.get("email")
 
     if not email:
         return Response({
-            "message": "Please enter email"
+            "message": "ادخل البريد من فضلك"
         }, status=status.HTTP_400_BAD_REQUEST)
     
     is_user_exists = User.objects.filter(email=email).exists()
 
     if not is_user_exists:
         return Response({
-            "message": "This email doesn't exists"
+            "message": "هذا البريد ليس مٌسجل "
         }, status=status.HTTP_404_NOT_FOUND)
     
     
     try:
         send_otp.delay(email)
         return Response({
-            "message": "An OTP was sent to your email, please check it out!"
+            "message": "تم ارسال رمز للبريد الالكتروني الخاص بك!"
         }, status=status.HTTP_200_OK)
     except Exception as e:
         print(e)
         return Response({
-            "message": "an error occurred while sending the email, please try again."
+            "message": f"an error occurred while sending the email, please try again. {e}"
         }, status=status.HTTP_400_BAD_REQUEST)
