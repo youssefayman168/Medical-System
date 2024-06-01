@@ -4,10 +4,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.hashers import make_password
 from ...models import User
+from globals.permissions import OnlyAdmins
 
 
 @api_view(['DELETE',])
-@permission_classes([permissions.IsAdminUser])
+@permission_classes([OnlyAdmins])
 def delete_user(request, user_id):
     try:
         user = User.objects.get(pk=user_id)

@@ -1,12 +1,12 @@
-from rest_framework import permissions
 from rest_framework.decorators import permission_classes, api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.hashers import make_password
 from ...models import User
+from globals.permissions import OnlyAdmins
 
 @api_view(['POST',])
-@permission_classes([permissions.IsAdminUser])
+@permission_classes([OnlyAdmins])
 def create_user(request):
     data = request.data
     if not data:

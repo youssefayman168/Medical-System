@@ -5,10 +5,10 @@ from rest_framework import status
 from django.contrib.auth.hashers import make_password
 from ...models import User
 from users.apis.serializers import UserSerializer
-
+from globals.permissions import OnlyAdmins
 
 @api_view(["PUT"])
-@permission_classes([permissions.IsAdminUser])
+@permission_classes([OnlyAdmins])
 def update_user(request, user_id): 
     try :
         
