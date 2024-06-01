@@ -11,6 +11,7 @@ urlpatterns = [
     path("delete/<int:user_id>/", delete_user),
     path("update/<int:user_id>/", update_user),
     path("get-user/<int:user_id>/", get_user),
+    path("get/", get_users),
     path("login/", login),
     path('reset-password/', include("users.apis.views.reset_password.urls")),
     path("refresh/", TokenRefreshView.as_view())
