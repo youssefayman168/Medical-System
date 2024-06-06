@@ -15,8 +15,10 @@
 
 ## Update User: [Click Here](/DOcs/users/UpdateUser.MD)
 
-## Refresh: [Click Here](/DOcs/auth/Refresh.md)
+## Delete User: [Click Here](/DOcs/users/DeleteUser.MD)
 
-## Refresh: [Click Here](/DOcs/auth/Refresh.md)
+## Get Users: [Click Here](/DOcs/users/GetUsers.MD)
+
+## Get User: [Click Here](/DOcs/users/GetUser.MD)
 
 <!-- ## Login: [Click Here](/DOcs/auth/reset/README.MD) -->

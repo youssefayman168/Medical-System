@@ -1,8 +1,8 @@
-# Get User
+# Get Users
 
 ---
 
-# This Endpoint Allows Retrieving A Specific User's Data
+# This Endpoint Allows Retrieving All Users' Information 
 
 # Endpoint: https://apis.kah-moh.com/users/get-user/{userID}/
 
