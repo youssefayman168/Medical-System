@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 class User (AbstractUser):
     national_id = models.BigIntegerField(null=True, blank=True)
     job_title = models.CharField(max_length=250, null=True, blank=True)
-    is_admin = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False, null=True, blank=True)
     email = models.EmailField(unique=True)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
