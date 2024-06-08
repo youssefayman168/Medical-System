@@ -74,5 +74,5 @@ def create_user(request):
     except Exception as e:
         print(e)
         return Response({
-            "message": "حدث خطأ اثناء انشاء المستخدم...حاول مرة اخري لاحقاً"
+            "message": f"حدث خطأ اثناء انشاء المستخدم...حاول مرة اخري لاحقاً {e}"
         }, status=status.HTTP_400_BAD_REQUEST)
