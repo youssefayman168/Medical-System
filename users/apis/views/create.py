@@ -46,13 +46,13 @@ def create_user(request):
             "message": "من فضلك ادخل كلمة سر المستخدم"
         }, status=status.HTTP_400_BAD_REQUEST)
     
-    username_exists = User.objects.filter(username=username).exists()
+    # username_exists = User.objects.filter(username=username).exists()
     email_exists = User.objects.filter(email=email).exists()
 
-    if username_exists:
-        return Response({
-            "message": "يوجد مستخدم بالفعل بهذا الاسم"
-        }, status=status.HTTP_400_BAD_REQUEST)
+    # if username_exists:
+    #     return Response({
+    #         "message": "يوجد مستخدم بالفعل بهذا الاسم"
+    #     }, status=status.HTTP_400_BAD_REQUEST)
 
     if email_exists:
         return Response({
