@@ -5,6 +5,7 @@ from rest_framework import status
 from ..serializers import PaitentSerializer
 from ...models import Paitent
 from globals.track_activity import track_activity
+from activity.models import Activity
 
 @api_view(['GET',])
 @permission_classes([permissions.IsAdminUser])
@@ -19,7 +20,16 @@ def delete_patient(request, patient_id):
     
     try:
         patient.delete()
-        track_activity.delay(f"تم حذف مريض بواسطة {user.username}", user)
+        try:
+                Activity.objects.create(
+                        content=f"تم حذف مريض بواسطة {user.username}",
+                        made_by=user
+                    )
+        except Exception as e:
+                return Response({
+                    "message": "حدث خطأ اثناء حذف المريض"
+                })      
+
         return Response({
             "message": "تم حذف المريض بنجاح"
         }, status=status.HTTP_400_BAD_REQUEST)

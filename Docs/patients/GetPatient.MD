@@ -16,10 +16,13 @@
 
 {
     "data": {
-        "username": "YOUSSEF",
-        "email": "yosofaymanessawy@gmail.com",
-        "job_title": "JOB",
-        "national_id": 15154
+        "id": 2,
+        "name": "PATIENT",
+        "age": 25,
+        "gender": "male",
+        "document_number": 512154,
+        "date_order_delivered": null,
+        "added_at": "2024-06-09T11:38:23.904067Z"
     }
 }
 
