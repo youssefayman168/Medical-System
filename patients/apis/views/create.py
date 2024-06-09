@@ -9,11 +9,11 @@ from globals.track_activity import track_activity
 @permission_classes([permissions.IsAdminUser])
 def create_patient(request): 
     user = request.user
-    try :
+    try:
         serializer = PaitentSerializer(data=request.data)
         if serializer.is_valid() :
             serializer.save()
-            track_activity.delay(f"تم اضافة مريض جديد بواسطة {user.username}", user)
+            track_activity.delay(f"تم اضافة مريض جديد بواسطة {user.username}", user.username)
             return Response({
                 "message": "تم اضافة المريض"
             },status=status.HTTP_200_OK)
