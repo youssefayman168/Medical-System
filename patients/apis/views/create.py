@@ -4,16 +4,26 @@ from rest_framework.response import Response
 from rest_framework import status
 from ..serializers import PaitentSerializer
 from globals.track_activity import track_activity
+from activity.models import Activity
 
 @api_view(['POST'])
 @permission_classes([permissions.IsAdminUser])
 def create_patient(request): 
     user = request.user
+    
     try:
         serializer = PaitentSerializer(data=request.data)
         if serializer.is_valid() :
             serializer.save()
-            track_activity.delay(f"تم اضافة مريض جديد بواسطة {user.username}", user.username)
+            try:
+                Activity.objects.create(
+                        content="تم انشاء مريض جديد حديثاً",
+                        made_by=user
+                    )
+            except Exception as e:
+                    return Response({
+                        "message": "حدث خطأ اثناء انشاء المريض"
+                    })            
             return Response({
                 "message": "تم اضافة المريض"
             },status=status.HTTP_200_OK)

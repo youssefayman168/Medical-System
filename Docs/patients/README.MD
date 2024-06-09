@@ -11,7 +11,7 @@
 
 ---
 
-## Create Patient: [Click Here](/DOcs/users/CreateUser.MD)
+## Create Patient: [Click Here](/DOcs/patients/CreatePatient.MD)
 
 ## Update Patient: [Click Here](/DOcs/users/UpdateUser.MD)
 
