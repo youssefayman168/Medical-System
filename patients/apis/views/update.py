@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from ..serializers import PaitentSerializer
 from globals.track_activity import track_activity
 from ...models import Paitent
+from activity.models import Activity
 
 @decorators.api_view(['PUT'])
 @decorators.permission_classes([permissions.IsAdminUser])
@@ -19,7 +20,16 @@ def update_patient(request, patient_id):
         serializer = PaitentSerializer(patient, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            track_activity.delay(f"تم نحديث بيانات مريض بواسطة {user.username}", user)
+            try:
+                Activity.objects.create(
+                        content=f"تم نحديث بيانات مريض بواسطة {user.username}",
+                        made_by=user
+                    )
+            except Exception as e:
+                    return Response({
+                        "message": "حدث خطأ اثناء حذف المريض"
+                    })   
+
             return Response({
                 "message": "تم تحديث المريض"
             },status=status.HTTP_200_OK)
