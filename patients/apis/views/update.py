@@ -35,7 +35,7 @@ def update_patient(request, patient_id):
             },status=status.HTTP_200_OK)
         print(serializer.errors)
         return Response({
-            "message": "حدث خطأ اثناء تحديث المريض...الرجاء المحاولة مرة اخري"
+            "message": f"حدث خطأ اثناء تحديث المريض...الرجاء المحاولة مرة اخري {serializer.errors}"
         },status=status.HTTP_400_BAD_REQUEST)
 
     except Exception as error:
