@@ -4,7 +4,7 @@
 
 # This Endpoint Allows You To Update Users As You Wish
 
-# Endpoint: http://apis.kah-moh.com/users/create/
+# Endpoint: https://apis.kah-moh.com/users/update/{userID}/
 
 # METHOD: PUT
 
@@ -21,7 +21,7 @@
 
 ## - If The Email Was Already Taken The Process Will Fail
 
-## - If You Desire The User You're Creating To Be And Admin, set is_admin to `true`
+## - If You Desire The User You're Updating To Be And Admin, set is_admin to `true`
 
 # Responses:
 
