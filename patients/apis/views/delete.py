@@ -7,7 +7,7 @@ from ...models import Paitent
 from globals.track_activity import track_activity
 from activity.models import Activity
 
-@api_view(['GET',])
+@api_view(['DELETE',])
 @permission_classes([permissions.IsAdminUser])
 def delete_patient(request, patient_id):
     user = request.user
