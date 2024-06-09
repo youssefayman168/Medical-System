@@ -32,7 +32,7 @@ def delete_patient(request, patient_id):
 
         return Response({
             "message": "تم حذف المريض بنجاح"
-        }, status=status.HTTP_400_BAD_REQUEST)
+        }, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({
             "message": "حصل خطأ اثناء حذف المريض"
