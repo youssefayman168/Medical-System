@@ -13,6 +13,6 @@ urlpatterns = [
     path("get-user/<int:user_id>/", get_user),
     path("get/", get_users),
     path("login/", login),
-    path('reset-password/', include("users.apis.views.reset_password.urls")),
+    # path('reset-password/', include("users.apis.views.reset_password.urls")),
     path("refresh/", TokenRefreshView.as_view())
 ]
