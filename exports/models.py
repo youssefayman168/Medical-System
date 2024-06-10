@@ -6,7 +6,7 @@ class Export(models.Model):
     date = models.DateField(null=True, blank=True)
     invoice_date = models.DateField(null=True, blank=True)
     receiver_name = models.CharField(max_length=300)
-    attachment = models.FileField(upload_to="exports/attachments")
+    attachment = models.FileField(upload_to="exports/attachments", null=True, blank=True)
 
 
 class Order(models.Model):

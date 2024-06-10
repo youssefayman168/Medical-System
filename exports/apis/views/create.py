@@ -42,10 +42,10 @@ def create_export(request):
             "message": "من فضلك ادخل اسم المستلم"
         }, status=status.HTTP_400_BAD_REQUEST)
     
-    if not attachment:
-        return Response({
-            "message": "من فضلك ادخل مستند التوريد"
-        }, status=status.HTTP_400_BAD_REQUEST)
+    # if not attachment:
+    #     return Response({
+    #         "message": "من فضلك ادخل مستند التوريد"
+    #     }, status=status.HTTP_400_BAD_REQUEST)
     
     try:
         export = Export.objects.create(
