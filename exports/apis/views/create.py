@@ -64,7 +64,7 @@ def create_export(request):
             except Exception as e:
                 print(e)
                 return Response({
-                    "message": "حدث خطأ اثناء ادخال المنتجات الخاصة بالتوريد...حاول مرة اخري"
+                    "message": f"حدث خطأ اثناء ادخال المنتجات الخاصة بالتوريد...حاول مرة اخري {e}"
                 }, status=status.HTTP_400_BAD_REQUEST)
             
         try:
