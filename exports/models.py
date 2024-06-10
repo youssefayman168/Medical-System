@@ -8,7 +8,6 @@ class Export(models.Model):
     receiver_name = models.CharField(max_length=300)
     attachment = models.FileField(upload_to="exports/attachments", null=True, blank=True)
 
-
 class Order(models.Model):
     prod_name = models.CharField(max_length=250)
     quantity = models.BigIntegerField()
