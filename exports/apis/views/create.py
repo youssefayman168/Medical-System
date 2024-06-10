@@ -65,8 +65,7 @@ def create_export(request):
                 print(e)
                 return Response({
                     "message": f"حدث خطأ اثناء ادخال المنتجات الخاصة بالتوريد...حاول مرة اخري {e}"
-                }, status=status.HTTP_400_BAD_REQUEST)
-            
+                }, status=status.HTTP_400_BAD_REQUEST)           
         try:
                 Activity.objects.create(
                         content="تم انشاء توريد جديد حديثاً",
