@@ -11,7 +11,6 @@ class User (AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
 
-
 class OTPCode(models.Model):
     otp = models.BigIntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
