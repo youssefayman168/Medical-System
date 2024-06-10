@@ -57,8 +57,8 @@ def create_export(request):
         for order in orders:
             try:
                 Order.objects.create(
-                    quantity=order.get("quantity"),
-                    prod_name=order.get("prod_name"),
+                    quantity=order.quantity,
+                    prod_name=order.prod_name,
                     export=export
                 )
             except Exception as e:
