@@ -3,7 +3,7 @@ from rest_framework.decorators import permission_classes, api_view
 from rest_framework.response import Response
 from rest_framework import status
 from exports.models import Export, Order
-from globals.track_activity import track_activity
+from activity.models import Activity
 
 @api_view(["POST"])
 @permission_classes([permissions.IsAdminUser])
@@ -66,11 +66,20 @@ def create_export(request):
                 return Response({
                     "message": "حدث خطأ اثناء ادخال المنتجات الخاصة بالتوريد...حاول مرة اخري"
                 }, status=status.HTTP_400_BAD_REQUEST)
-        track_activity.delay(f"تم اضافة توريد جديد بواسطة {user.username}")
+            
+        try:
+                Activity.objects.create(
+                        content="تم انشاء توريد جديد حديثاً",
+                        made_by=user
+                    )
+        except Exception as e:
+                return Response({
+                    "message": "حدث خطأ اثناء انشاء التوريد"
+                })       
         return Response({
             "message": "تم اضافة التوريد بنجاح !"
         }, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({
-            "message": "حدث خطأ اثناء انشاء التوريد...الرجاء المحاولة مرة اخري"
+            "message": f"حدث خطأ اثناء انشاء التوريد...الرجاء المحاولة مرة اخري {e}"
         }, status=status.HTTP_400_BAD_REQUEST)
