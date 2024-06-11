@@ -3,7 +3,7 @@ from rest_framework.decorators import permission_classes, api_view
 from rest_framework.response import Response
 from rest_framework import status
 from exports.models import Export, Order
-from globals.track_activity import track_activity
+from activity.models import Activity
 
 @api_view(['PUT',])
 @permission_classes([permissions.IsAdminUser])
@@ -71,7 +71,15 @@ def update_export(request, export_id):
     try:
         if is_updated:
             export.save()
-            track_activity.delay(f"تم تحديث توريد بواسطة {user.username}", user)
+            try:
+                Activity.objects.create(
+                    content=f"تم تحديث توريد بواسطة {user.username}",
+                    made_by=user
+                )
+            except Exception as e:
+                return Response({
+                    "message": "حدث خطأ اثناء التجديث...رجاء حاول مرة اخري"
+                })
             return Response({
                 "message": "تم تحديث التوريد بنجاح !"
             }, status=status.HTTP_200_OK)
