@@ -22,4 +22,5 @@ urlpatterns = [
     path("export/", include("exports.apis.urls")),
     path("patients/", include("patients.apis.urls")),
     path("users/", include("users.apis.urls")),
+    path("receipts/", include("receipets.apis.urls")),
 ]
