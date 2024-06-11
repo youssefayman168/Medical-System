@@ -71,15 +71,6 @@ def update_export(request, export_id):
     try:
         if is_updated:
             export.save()
-            try:
-                Activity.objects.create(
-                    content=f"تم تحديث توريد بواسطة {user['username']}",
-                    made_by=user
-                )
-            except Exception as e:
-                return Response({
-                    "message": "حدث خطأ اثناء التجديث...رجاء حاول مرة اخري"
-                }, status=status.HTTP_404_NOT_FOUND)
             return Response({
                 "message": "تم تحديث التوريد بنجاح !"
             }, status=status.HTTP_200_OK)
