@@ -80,6 +80,6 @@ def update_export(request, export_id):
         }, status=status.HTTP_400_BAD_REQUEST)
     except Exception as e:
         return Response({
-            "message": "حدث خطأ اثناء التحديث...حاول مرة اخري"
+            "message": f"حدث خطأ اثناء التحديث...حاول مرة اخري {e}"
         }, status=status.HTTP_400_BAD_REQUEST)
     
