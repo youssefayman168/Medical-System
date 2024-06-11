@@ -5,6 +5,7 @@ from rest_framework import status
 from globals.track_activity import track_activity
 from patients.models import Paitent
 from receipets.models import Receipet
+from activity.models import Activity
 
 @api_view(['POST'])
 @permission_classes([permissions.IsAdminUser])
@@ -31,7 +32,7 @@ def create_receipt(request):
         }, status=status.HTTP_400_BAD_REQUEST)
 
     try:
-        patient = Paitent.objects.get(doc_number=doc_number)
+        patient = Paitent.objects.get(document_number=doc_number)
     except Paitent.DoesNotExist:
         return Response({
             "message": "المريض ليس موجود"
@@ -45,7 +46,15 @@ def create_receipt(request):
         )
         patient.date_order_delivered = receipt.receiving_date
         patient.save()
-        track_activity.delay(f"تم اضافة استلام جديد بواسطة {user.username}")
+        try:
+            Activity.objects.create(
+                    content="تم انشاء توريد استلام حديثاً",
+                    made_by=user
+                )
+        except Exception as e:
+                return Response({
+                    "message": "حدث خطأ اثناء انشاء الاستلام"
+                }, status=status.HTTP_400_BAD_REQUEST)  
         return Response({
             "message": "تم اضافة الاستلام بنجاح"
         }, status=status.HTTP_200_OK)
