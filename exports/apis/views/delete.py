@@ -6,7 +6,7 @@ from exports.models import Export, Order
 from exports.apis.serializer import ExportSerializer, OrderSerializer
 from globals.track_activity import track_activity
 
-@api_view(['GET',])
+@api_view(['DELETE',])
 @permission_classes([permissions.IsAdminUser])
 def delete_export(request, export_id):
     user = request.user
