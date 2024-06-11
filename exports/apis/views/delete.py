@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from exports.models import Export, Order
 from exports.apis.serializer import ExportSerializer, OrderSerializer
-from globals.track_activity import track_activity
+from activity.models import Activity
 
 @api_view(['DELETE',])
 @permission_classes([permissions.IsAdminUser])
@@ -20,7 +20,15 @@ def delete_export(request, export_id):
     
     try:
         export.delete()
-        track_activity.delay(f"تم حذف توريد بواسطة {user.username}")
+        try:
+            Activity.objects.create(
+                content=f"تم حذف توريد بواسطة {user.username}",
+                made_by=user
+            )
+        except Exception as e:
+            return Response({
+                "message": "حدث خطأ اثناء الحذف...رجاء حاول مرة اخري"
+            })
         return Response({
             "message": "تم حذف التوريد بنجاح "
         }, status=status.HTTP_200_OK)
