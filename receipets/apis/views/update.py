@@ -6,7 +6,7 @@ from globals.track_activity import track_activity
 from patients.models import Paitent
 from receipets.models import Receipet
 
-@api_view(['POST'])
+@api_view(['POST', 'PUT'])
 @permission_classes([permissions.IsAdminUser])
 def update_receipt(request, receipt_id):
     data = request.data
