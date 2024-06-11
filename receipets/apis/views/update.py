@@ -53,7 +53,7 @@ def update_receipt(request, receipt_id):
             }, status=status.HTTP_400_BAD_REQUEST)
         return Response({
             "message": "لا يوجد اي بيانات لتحديثها "
-        }, stauts=status.HTTP_400_BAD_REQUEST)
+        }, status=status.HTTP_400_BAD_REQUEST)
     except Exception as e:
         print(e)
         return Response({
