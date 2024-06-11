@@ -38,8 +38,8 @@ def update_export(request, export_id):
         for order in orders:
             try:
                 order_item = Order.objects.create(
-                    quantity=order.get("quantity"),
-                    prod_name=order.get("prod_name"),
+                    quantity=order["quantity"],
+                    prod_name=order["prod_name"],
                     export=export
                 )
                 orders_list.append(order_item)
