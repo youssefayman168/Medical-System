@@ -58,7 +58,7 @@ def update_receipt(request, receipt_id):
                 }, status=status.HTTP_400_BAD_REQUEST)
             return Response({
                 "message": "تم تحديث الاستلام بنجاح"
-            }, status=status.HTTP_400_BAD_REQUEST)
+            }, status=status.HTTP_200_OK)
         return Response({
             "message": "لا يوجد اي بيانات لتحديثها "
         }, status=status.HTTP_400_BAD_REQUEST)
