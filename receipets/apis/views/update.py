@@ -57,5 +57,5 @@ def update_receipt(request, receipt_id):
     except Exception as e:
         print(e)
         return Response({
-            "message": "حدث خطأ انثاء تحديث الاستلام...حاول مرة اخري"
-        }, stauts=status.HTTP_400_BAD_REQUEST)
+            "message": f"حدث خطأ انثاء تحديث الاستلام...حاول مرة اخري {e}"
+        }, status=status.HTTP_400_BAD_REQUEST)
