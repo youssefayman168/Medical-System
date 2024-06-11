@@ -2,7 +2,7 @@ from rest_framework import permissions
 from rest_framework.decorators import permission_classes, api_view
 from rest_framework.response import Response
 from rest_framework import status
-from globals.track_activity import track_activity
+from activity.models import Activity
 from patients.models import Paitent
 from receipets.models import Receipet
 
@@ -47,7 +47,15 @@ def update_receipt(request, receipt_id):
         
         if is_update:
             receipt.save()
-            track_activity.delay(f"تم تحديث استلام بواسطة {user.username}")
+            try:
+                Activity.objects.create(
+                        content=f"تم تحديث استلام بواسطة {user.username}",
+                        made_by=user
+                    )
+            except Exception as e:
+                return Response({
+                    "message": "حدث خطأ اثناء تحديث الاستلام"
+                }, status=status.HTTP_400_BAD_REQUEST)
             return Response({
                 "message": "تم تحديث الاستلام بنجاح"
             }, status=status.HTTP_400_BAD_REQUEST)
