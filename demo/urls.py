@@ -23,4 +23,5 @@ urlpatterns = [
     path("patients/", include("patients.apis.urls")),
     path("users/", include("users.apis.urls")),
     path("receipts/", include("receipets.apis.urls")),
+    path("analytics/", include("analytics.apis.urls")),
 ]
