@@ -1,10 +1,13 @@
-from rest_framework.views import APIView
+from rest_framework.decorators import permission_classes, api_view
+from globals.permissions import OnlyAdmins
 from rest_framework.response import Response
 from django.utils import timezone
 from datetime import datetime, timedelta
 from patients.models import Paitent
 from globals.get_month_range import get_month_range
 
+@api_view(["GET"])
+@permission_classes([OnlyAdmins])
 def get_patients(request):
         today = timezone.now()
         
