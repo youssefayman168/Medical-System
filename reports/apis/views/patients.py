@@ -37,3 +37,41 @@ def get_patient_report(request, document_number):
         return Response({
             "message": "حدث خطأ اثناء جلب التقرير"
         }, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET",])
+@permission_classes([permissions.IsAdminUser])
+def get_received_patients(request, date):
+    try:
+        patients = Paitent.objects.filter(date_order_delivered=date)
+    except Exception as e:
+        return Response({
+            "message": "حدث خطأ اثناء جلب المرضي الذين استلموا"
+        }, status=status.HTTP_400_BAD_REQUEST)
+    try:
+        serializer = PaitentSerializer(patients, many=True)
+        return Response({
+            "data": serializer.data
+        }, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({
+            "message": "حدث خطأ اثناء عرض المرضي"
+        }, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET",])
+@permission_classes([permissions.IsAdminUser])
+def get_not_received_patients(request, date):
+    try:
+        patients = Paitent.objects.exclude(date_order_delivered=date)
+    except Exception as e:
+        return Response({
+            "message": "حدث خطأ اثناء جلب المرضي الذين استلموا"
+        }, status=status.HTTP_400_BAD_REQUEST)
+    try:
+        serializer = PaitentSerializer(patients, many=True)
+        return Response({
+            "data": serializer.data
+        }, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({
+            "message": "حدث خطأ اثناء عرض المرضي"
+        }, status=status.HTTP_400_BAD_REQUEST)
