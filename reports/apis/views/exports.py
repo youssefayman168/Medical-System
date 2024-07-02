@@ -45,7 +45,23 @@ def get_exported_items(request, date, sec_date):
 @api_view(['GET'])
 def get_monthly_exports(request, date):
     try:
-        exports = Export.objects.filter(date=date)
+        if not date:
+            return Response({'error': 'Date is required'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Parse the date string to extract the month and year
+        date_obj = datetime.strptime(date, '%Y-%m-%d')
+        year = date_obj.year
+        month = date_obj.month
+        
+        # Define the date range for the specified month
+        date_from = datetime(year, month, 1)
+        if month == 12:
+            date_to = datetime(year + 1, 1, 1)
+        else:
+            date_to = datetime(year, month + 1, 1)
+
+    # Retrieve all exports for the specified month
+        exports = Export.objects.filter(date__range=(date_from, date_to))
         serializer = ExportSerializer(exports, many=True)
         return Response({
             "data": serializer.data
