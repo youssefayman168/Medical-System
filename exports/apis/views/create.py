@@ -59,14 +59,14 @@ def create_export(request):
 
         if not isinstance(orders, list):
             return Response({
-                "message": "بيانات الطلبات غير صحيحة"
+                "message": f"بيانات الطلبات غير صحيحة, {type(orders)}"
             }, status=status.HTTP_400_BAD_REQUEST)
 
         for order in orders:
             # Ensure each order is a dictionary
             if not isinstance(order, dict):
                 return Response({
-                    "message": "تفاصيل الطلب غير صحيحة"
+                    "message": f"تفاصيل الطلب غير صحيحة, {type(order)}"
                 }, status=status.HTTP_400_BAD_REQUEST)
 
             try:
