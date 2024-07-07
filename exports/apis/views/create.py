@@ -56,18 +56,30 @@ def create_export(request):
             receiver_name=receiver_name,
             attachment=attachment
         )
+
+        if not isinstance(orders, list):
+            return Response({
+                "message": "بيانات الطلبات غير صحيحة"
+            }, status=status.HTTP_400_BAD_REQUEST)
+
         for order in orders:
+            # Ensure each order is a dictionary
+            if not isinstance(order, dict):
+                return Response({
+                    "message": "تفاصيل الطلب غير صحيحة"
+                }, status=status.HTTP_400_BAD_REQUEST)
+
             try:
                 Order.objects.create(
-                    quantity=order['quantity'],
-                    prod_name=order['prod_name'],
+                    quantity=order.get('quantity'),
+                    prod_name=order.get('prod_name'),
                     export=export
                 )
             except Exception as e:
                 print(e)
                 return Response({
                     "message": f"حدث خطأ اثناء ادخال المنتجات الخاصة بالتوريد...حاول مرة اخري {e}"
-                }, status=status.HTTP_400_BAD_REQUEST)           
+                }, status=status.HTTP_400_BAD_REQUEST)          
         try:
                 Activity.objects.create(
                         content="تم انشاء توريد جديد حديثاً",
