@@ -18,7 +18,7 @@ def create_export(request):
             "message": "من فضلك ادخل بيانات التوريد لاضافته"
         }, status=status.HTTP_100_CONTINUE)
     
-    orders = data.get("orders")
+    orders = list(data.get("orders"))
     date = data.get("date")
     invoice_date = data.get("invoice_date")
     receiver_name = data.get("receiver_name")
