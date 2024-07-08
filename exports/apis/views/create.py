@@ -63,7 +63,6 @@ def create_export(request):
             }, status=status.HTTP_400_BAD_REQUEST)
 
         for order in orders:
-            order = dict(order)
             # Ensure each order is a dictionary
             if not isinstance(order, dict):
                 return Response({
