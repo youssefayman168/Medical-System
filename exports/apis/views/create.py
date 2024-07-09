@@ -9,7 +9,7 @@ from activity.models import Activity
 
 @api_view(["POST"])
 @permission_classes([permissions.IsAdminUser])
-@parser_classes([FormParser, MultiPartParser, JSONParser])
+# @parser_classes([FormParser, MultiPartParser, JSONParser])
 def create_export(request):
     # data = request.data
     # user = request.user 
