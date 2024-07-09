@@ -4,7 +4,7 @@ from ..models import Export, Order
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = "__all__"
+        fields = ("prod_name", "quantity")
 
 class ExportSerializer(serializers.ModelSerializer):
     orders = OrderSerializer(many=True)
