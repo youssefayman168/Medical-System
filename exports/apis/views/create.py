@@ -97,7 +97,7 @@ def create_export(request):
     #     return Response({
     #         "message": f"حدث خطأ اثناء انشاء التوريد...الرجاء المحاولة مرة اخري {e}"
     #     }, status=status.HTTP_400_BAD_REQUEST)
-    serializer = ExportSerializer(data=request.data, orders=request.data.get("orders"))
+    serializer = ExportSerializer(data=request.data)
     if serializer.is_valid():
         data = serializer.validated_data
         user = request.user
