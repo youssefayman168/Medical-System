@@ -4,95 +4,137 @@ from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.response import Response
 from rest_framework import status
 from exports.models import Export, Order
+from exports.apis.serializer import ExportSerializer
 from activity.models import Activity
 
 @api_view(["POST"])
 @permission_classes([permissions.IsAdminUser])
 @parser_classes([FormParser, MultiPartParser, JSONParser])
 def create_export(request):
-    data = request.data
-    user = request.user 
+    # data = request.data
+    # user = request.user 
     
-    if not data:
-        return Response({
-            "message": "من فضلك ادخل بيانات التوريد لاضافته"
-        }, status=status.HTTP_100_CONTINUE)
-    
-    orders = list(data.get("orders"))
-    date = data.get("date")
-    invoice_date = data.get("invoice_date")
-    receiver_name = data.get("receiver_name")
-    attachment = data.get("attachment")
-
-    if not orders or len(orders) == 0:
-        return Response({
-            "message": "من فضلك ادخل علي الأقل منتج واحد"
-        }, status=status.HTTP_400_BAD_REQUEST)
-    
-    if not date:
-        return Response({
-            "message": "من فضلك ادخل تاريخ التوريد"
-        }, status=status.HTTP_400_BAD_REQUEST)
-    
-    if not invoice_date:
-        return Response({
-            "message": "من فضلك ادخل تاريخ الفاتورة"
-        }, status=status.HTTP_400_BAD_REQUEST)
-    
-    if not receiver_name:
-        return Response({
-            "message": "من فضلك ادخل اسم المستلم"
-        }, status=status.HTTP_400_BAD_REQUEST)
-    
-    # if not attachment:
+    # if not data:
     #     return Response({
-    #         "message": "من فضلك ادخل مستند التوريد"
+    #         "message": "من فضلك ادخل بيانات التوريد لاضافته"
+    #     }, status=status.HTTP_100_CONTINUE)
+    
+    # orders = list(data.get("orders"))
+    # date = data.get("date")
+    # invoice_date = data.get("invoice_date")
+    # receiver_name = data.get("receiver_name")
+    # attachment = data.get("attachment")
+
+    # if not orders or len(orders) == 0:
+    #     return Response({
+    #         "message": "من فضلك ادخل علي الأقل منتج واحد"
     #     }, status=status.HTTP_400_BAD_REQUEST)
     
-    try:
-        export = Export.objects.create(
-            date=date,
-            invoice_date=invoice_date,
-            receiver_name=receiver_name,
-            attachment=attachment
-        )
+    # if not date:
+    #     return Response({
+    #         "message": "من فضلك ادخل تاريخ التوريد"
+    #     }, status=status.HTTP_400_BAD_REQUEST)
+    
+    # if not invoice_date:
+    #     return Response({
+    #         "message": "من فضلك ادخل تاريخ الفاتورة"
+    #     }, status=status.HTTP_400_BAD_REQUEST)
+    
+    # if not receiver_name:
+    #     return Response({
+    #         "message": "من فضلك ادخل اسم المستلم"
+    #     }, status=status.HTTP_400_BAD_REQUEST)
+    
+    # # if not attachment:
+    # #     return Response({
+    # #         "message": "من فضلك ادخل مستند التوريد"
+    # #     }, status=status.HTTP_400_BAD_REQUEST)
+    
+    # try:
+    #     export = Export.objects.create(
+    #         date=date,
+    #         invoice_date=invoice_date,
+    #         receiver_name=receiver_name,
+    #         attachment=attachment
+    #     )
 
-        if not isinstance(orders, list):
-            return Response({
-                "message": f"بيانات الطلبات غير صحيحة, {type(orders)}"
-            }, status=status.HTTP_400_BAD_REQUEST)
+    #     if not isinstance(orders, list):
+    #         return Response({
+    #             "message": f"بيانات الطلبات غير صحيحة, {type(orders)}"
+    #         }, status=status.HTTP_400_BAD_REQUEST)
 
-        for order in orders:
-            # Ensure each order is a dictionary
-            if not isinstance(order, dict):
-                return Response({
-                    "message": f"تفاصيل الطلب غير صحيحة, {type(order)}"
-                }, status=status.HTTP_400_BAD_REQUEST)
+    #     for order in orders:
+    #         # Ensure each order is a dictionary
+    #         if not isinstance(order, dict):
+    #             return Response({
+    #                 "message": f"تفاصيل الطلب غير صحيحة, {type(order)}"
+    #             }, status=status.HTTP_400_BAD_REQUEST)
 
-            try:
+    #         try:
+    #             Order.objects.create(
+    #                 quantity=order.get('quantity'),
+    #                 prod_name=order.get('prod_name'),
+    #                 export=export
+    #             )
+    #         except Exception as e:
+    #             print(e)
+    #             return Response({
+    #                 "message": f"حدث خطأ اثناء ادخال المنتجات الخاصة بالتوريد...حاول مرة اخري {e}"
+    #             }, status=status.HTTP_400_BAD_REQUEST)          
+    #     try:
+    #             Activity.objects.create(
+    #                     content="تم انشاء توريد جديد حديثاً",
+    #                     made_by=user
+    #                 )
+    #     except Exception as e:
+    #             return Response({
+    #                 "message": "حدث خطأ اثناء انشاء التوريد"
+    #             })       
+    #     return Response({
+    #         "message": "تم اضافة التوريد بنجاح !"
+    #     }, status=status.HTTP_200_OK)
+    # except Exception as e:
+    #     return Response({
+    #         "message": f"حدث خطأ اثناء انشاء التوريد...الرجاء المحاولة مرة اخري {e}"
+    #     }, status=status.HTTP_400_BAD_REQUEST)
+    serializer = ExportSerializer(data=request.data)
+    if serializer.is_valid():
+        data = serializer.validated_data
+        user = request.user
+
+        date = data['date']
+        invoice_date = data['invoice_date']
+        receiver_name = data['receiver_name']
+        attachment = data.get('attachment')
+        orders = data['orders']
+
+        try:
+            export = Export.objects.create(
+                date=date,
+                invoice_date=invoice_date,
+                receiver_name=receiver_name,
+                attachment=attachment
+            )
+
+            for order_data in orders:
                 Order.objects.create(
-                    quantity=order.get('quantity'),
-                    prod_name=order.get('prod_name'),
+                    prod_name=order_data['prod_name'],
+                    quantity=order_data['quantity'],
                     export=export
                 )
-            except Exception as e:
-                print(e)
-                return Response({
-                    "message": f"حدث خطأ اثناء ادخال المنتجات الخاصة بالتوريد...حاول مرة اخري {e}"
-                }, status=status.HTTP_400_BAD_REQUEST)          
-        try:
-                Activity.objects.create(
-                        content="تم انشاء توريد جديد حديثاً",
-                        made_by=user
-                    )
+
+            Activity.objects.create(
+                content="تم انشاء توريد جديد حديثاً",
+                made_by=user
+            )
+
+            return Response({
+                "message": "تم اضافة التوريد بنجاح !"
+            }, status=status.HTTP_200_OK)
+
         except Exception as e:
-                return Response({
-                    "message": "حدث خطأ اثناء انشاء التوريد"
-                })       
-        return Response({
-            "message": "تم اضافة التوريد بنجاح !"
-        }, status=status.HTTP_200_OK)
-    except Exception as e:
-        return Response({
-            "message": f"حدث خطأ اثناء انشاء التوريد...الرجاء المحاولة مرة اخري {e}"
-        }, status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+                "message": f"حدث خطأ اثناء انشاء التوريد...الرجاء المحاولة مرة اخري {e}"
+            }, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
